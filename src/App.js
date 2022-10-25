@@ -3,9 +3,9 @@ import "./App.css";
 import Form from "./components/Form";
 import List from "./components/List";
 
-
 export default function App() {
   const [todoData, setTodoData] = useState([]); // 첫 번째 인수 : 변수 이름, 두 번째 인수 State를 정하는 함수
+
   const [value, setValue] = useState("");
 
   const handleSubmit = (e) => {
