@@ -3,8 +3,12 @@ import "./App.css";
 import Form from "./components/Form";
 import Lists from "./components/Lists";
 
+const initialTodoData = localStorage.getItem("todoData")
+  ? JSON.parse(localStorage.getItem("todoData"))
+  : [];
+
 export default function App() {
-  const [todoData, setTodoData] = useState([]); // 첫 번째 인수 : 변수 이름, 두 번째 인수 State를 정하는 함수
+  const [todoData, setTodoData] = useState(initialTodoData); // 첫 번째 인수 : 변수 이름, 두 번째 인수 State를 정하는 함수
 
   const [value, setValue] = useState("");
 
@@ -12,6 +16,7 @@ export default function App() {
     (id) => {
       let newTodoData = todoData.filter((data) => data.id !== id);
       setTodoData(newTodoData);
+      localStorage.setItem("todoData", JSON.stringify(newTodoData));
     },
     [todoData]
   );
@@ -32,11 +37,13 @@ export default function App() {
         prev // prev: 함수(=>)를 사용해서 인수를 prev라는 것에 넣어준다 -> todoData의 값이 된다.
       ) => [...prev, newTodo]
     ); // 새로운 newTodo를 넣어준다.
+    localStorage.setItem("todoData", JSON.stringify([...todoData, newTodo]));
     setValue("");
   };
 
   const handleRemoveClick = () => {
     setTodoData([]);
+    localStorage.setItem("todoData", JSON.stringify([]));
   };
 
   return (
